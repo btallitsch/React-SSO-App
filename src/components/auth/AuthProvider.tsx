@@ -7,7 +7,7 @@
 
 import React, { createContext, useContext } from "react";
 import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
-import type { AuthContextValue } from "../../types";
+import type { AuthContextValue, User } from "../../types";
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
@@ -31,7 +31,7 @@ function Auth0Adapter({ children }: { children: React.ReactNode }) {
           name: user.name ?? "",
           email: user.email ?? "",
           avatar: user.picture,
-          role: (user["app_metadata"]?.role as AuthContextValue["user"] extends null ? never : AuthContextValue["user"]["role"]) ?? "viewer",
+          role: ((user["app_metadata"]?.role as User["role"]) ?? "viewer"),
         }
       : null,
     isAuthenticated,
